@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-3">
+    <h4>Users list :  </h4>
+    
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Type</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in user %}
+            <tr>
+                <td> {{u.Nom}}</td>
+                <td> {{u.prenom}} </td>
+                <td> {{u.email}} </td>
+                <td> {{u.user_type}}</td>
+                <td>
+                    <a href="" class="btn btn-sm btn-info">Edit</a>
+                    <!-- <a href="delete/{{s.id}}" class="btn btn-sm btn-danger">Delete</a>-->
+                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+
+     <!-- Modal
+         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirme Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to Delete this Student ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <a href="delete/{{s.id}}" class="btn btn-danger">Yes, Delete</a>
+        </div>
+      </div>
+    </div>
+         </div>
+     model end -->
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+ 
+</div>
+
+{% endblock content %}

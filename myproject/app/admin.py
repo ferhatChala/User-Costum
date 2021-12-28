@@ -16,7 +16,7 @@ class UserCreationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = (
-        'Nom', 'prenom', 'email', 'telephone', 'adresse', 'is_admin', 'is_cadre', 'is_chef_dep', 'is_sous_dir', 'is_content_admin')
+        'Nom', 'prenom', 'email', 'telephone', 'adresse', 'user_type')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -44,7 +44,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('Nom', 'prenom', 'email', 'password', 'telephone', 'adresse', 'is_admin', 'is_cadre', 'is_chef_dep', 'is_sous_dir', 'is_content_admin')
+        fields = ('Nom', 'prenom', 'email', 'password', 'telephone', 'adresse', 'user_type')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -62,14 +62,14 @@ class UserAdmin(BaseUserAdmin):
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
     list_display = (
-        'Nom', 'prenom', 'email', 'telephone', 'adresse', 'is_admin')
-    list_filter = ('is_admin', 'is_cadre', 'is_chef_dep', 'is_sous_dir', 'is_content_admin')
+        'Nom', 'prenom', 'email', 'telephone', 'adresse', 'user_type')
+    list_filter = ('user_type',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info',
          {'fields': ('Nom', 'prenom', 'telephone', 'adresse',)}),
         (
-        'Permissions', {'fields': ('is_admin', 'is_cadre', 'is_chef_dep', 'is_sous_dir', 'is_content_admin', 'is_staff', 'is_active', 'is_superuser')}),
+        'Permissions', {'fields': ('user_type',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -77,7 +77,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': (
-                'Nom', 'prenom', 'email', 'telephone', 'adresse', 'is_admin', 'is_cadre', 'is_chef_dep', 'is_sous_dir', 'is_content_admin',
+                'Nom', 'prenom', 'email', 'telephone', 'adresse', 'user_type',
                 'password1',
                 'password2')}
          ),

@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,Abstract
 # Create your models here.
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, Nom, prenom, email, telephone, adresse, is_admin, is_cadre, is_chef_dep, is_sous_dir,is_content_admin, password):
+    def create_user(self, Nom, prenom, email, telephone, adresse, user_type, password):
         """
         Creates and saves a User with the given data
         """
@@ -17,11 +17,7 @@ class MyUserManager(BaseUserManager):
             telephone=telephone,
             Nom=Nom,
             prenom=prenom,
-            is_admin=is_admin,
-            is_cadre=is_cadre,
-            is_chef_dep=is_chef_dep,
-            is_sous_dir=is_sous_dir,
-            is_content_admin=is_content_admin
+            user_type=user_type
         )
 
         user.set_password(password)
@@ -29,22 +25,18 @@ class MyUserManager(BaseUserManager):
         print(user.email)
         return user
 
-    def create_superuser(self, Nom, prenom, email, telephone, adresse, is_admin, is_cadre, is_chef_dep, is_sous_dir,is_content_admin, password):
+    def create_superuser(self, email, Nom, prenom, telephone, adresse, user_type ,password):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
         user = self.create_user(password=password,
                                 email=self.normalize_email(email),
-                                adresse=adresse,
-                                telephone=telephone,
                                 Nom=Nom,
                                 prenom=prenom,
-                                is_admin=is_admin,
-                                is_cadre=is_cadre,
-                                is_chef_dep=is_chef_dep,
-                                is_sous_dir=is_sous_dir,
-                                is_content_admin=is_content_admin
+                                telephone=telephone,
+                                adresse=adresse,
+                                user_type=user_type,
                                 )
         user.is_admin = True
         user.is_staff = True
@@ -55,6 +47,13 @@ class MyUserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    USER_TYPE_CHOICES = (
+      (1, 'content_admin'),
+      (2, 'sous_dir'),
+      (3, 'chef_dep'),
+      (4, 'cadre'),
+      )
+
     class Meta:
         db_table = 'auth_user'
 
@@ -65,14 +64,16 @@ class User(AbstractUser):
     email = models.EmailField('email address', unique=True)
     telephone = models.CharField(max_length=255, default="tel")
     adresse = models.CharField(max_length=255, default="adresse")
-    is_admin = models.BooleanField('admin status', default=False)
-    is_cadre = models.BooleanField('Cadre status', default=False)
-    is_chef_dep = models.BooleanField('Chef Departement status', default=False)
-    is_sous_dir = models.BooleanField('Sous Directeur status', default=False)
-    is_content_admin = models.BooleanField('Content admin status', default=False)
+    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
+
+    #is_admin = models.BooleanField('admin status', default=False)
+    #is_cadre = models.BooleanField('Cadre status', default=False)
+    #is_chef_dep = models.BooleanField('Chef Departement status', default=False)
+    #is_sous_dir = models.BooleanField('Sous Directeur status', default=False)
+    #is_content_admin = models.BooleanField('Content admin status', default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['Nom', 'prenom', 'telephone', 'adresse', 'is_admin','is_cadre', 'is_chef_dep', 'is_sous_dir', 'is_content_admin']
+    REQUIRED_FIELDS = ['Nom', 'prenom', 'telephone', 'adresse', 'user_type']
 
     def __str__(self):
         return self.email
