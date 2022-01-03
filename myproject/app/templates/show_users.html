@@ -17,18 +17,16 @@
             </tr>
         </thead>
         <tbody>
-            {% for u in user %}
+            {% for p in user %}
             <tr>
-                <td> {{u.Nom}}</td>
-                <td> {{u.prenom}} </td>
-                <td> {{u.email}} </td>
-                <td> {{u.user_type}}</td>
+                <td> {{p.user.Nom}}</td>
+                <td> {{p.user.prenom}} </td>
+                <td> {{p.user.email}} </td>
+                <td> {{p.user.user_type}}</td>
                 <td>
-                    <a href="" class="btn btn-sm btn-info">Edit</a>
+                    <a href="update/{{p.id}}" class="btn btn-sm btn-info">Edit</a>
                     <!-- <a href="delete/{{s.id}}" class="btn btn-sm btn-danger">Delete</a>-->
-                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal">
-                        Delete
-                    </button>
+                    <a href="delete/{{u.id}}" class="btn btn-danger">Yes, Delete</a>
                 </td>
             </tr>
 

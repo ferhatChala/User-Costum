@@ -24,6 +24,8 @@ urlpatterns = [
     path('', views.home, name="home"),
     path("register", views.register_request, name="register"),
     path('show_users', views.showUsers, name="show_users"),
+    path('delete/<int:id>' , views.delete, name="delete"),
+    path('update/<int:id>' , views.update, name="update"),
     path('login/',auth_views.LoginView.as_view(template_name='auth/login.html'),name='login'),
     path('logout/',auth_views.LogoutView.as_view(template_name='auth/logout.html'),name='logout' ,kwargs={'next_page':'/'}),
    # path('logout/',LogoutView.as_view(),name='logout',kwargs={'next_page':'/'})
