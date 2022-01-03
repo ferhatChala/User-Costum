@@ -13,7 +13,7 @@
   <body>
 
     {% load crispy_forms_tags %}  
-    {% include 'includes/messages.html' %}
+    
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">Admin</a>
@@ -42,6 +42,7 @@
         </form>
       </div>
     </nav>
+    {% include 'includes/messages.html' %}
 
 
     {% block content %}
